@@ -33,7 +33,6 @@ public class Line extends Shape {
         if (Math.abs(x2-x1) > Math.abs(y2-y1)) {
             graphics2D.drawLine(x1, y1, x2, y1);
             
-            //if(isArrow) {
                 Stroke lineStroke = graphics2D.getStroke();
                 graphics2D.setStroke(new BasicStroke(2));
 
@@ -72,6 +71,11 @@ public class Line extends Shape {
             //}
         }        
         graphics2D.setStroke(oldStroke);
+    }
+
+    @Override
+    public boolean hasPoint(int x, int y) {
+        return false;
     }
 
     public int getX1() {

@@ -36,6 +36,11 @@ public class ControlPoint extends Shape {
         graphics2D.setStroke(oldStroke);
     }
 
+    @Override
+    public boolean hasPoint(int x, int y) {
+        return false;
+    }
+
     public int getX1() {
         return x1;
     }

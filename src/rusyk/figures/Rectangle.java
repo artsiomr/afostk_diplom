@@ -31,6 +31,11 @@ public class Rectangle extends Shape {
 
     }
 
+    @Override
+    public boolean hasPoint(int x, int y) {
+        return false;
+    }
+
     public int getX() {
         return x;
     }
