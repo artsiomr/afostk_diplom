@@ -12,9 +12,11 @@ public class LineButton extends FigureButton {
 
     private int x1, y1;
     private boolean mousePressed;
+    private boolean isArrow;
 
-    public LineButton(String text) {
+    public LineButton(String text, boolean isArrow) {
         super(text);
+        this.isArrow = isArrow;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class LineButton extends FigureButton {
     @Override
     public void mouseReleased(MouseEvent e) {
         if (isPressed() && mousePressed) {
-            fireDrawEvent(new DrawEvent(new Line(x1, y1, e.getX(), e.getY())));
+            fireDrawEvent(new DrawEvent(new Line(x1, y1, e.getX(), e.getY(), isArrow)));
         }
         mousePressed = false;
     }

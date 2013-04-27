@@ -39,7 +39,10 @@ public class ButtonPanel extends JPanel implements MouseListener, FigureButtonPr
         FigureButton rect12Btn = new RectangleButton("Блок 1x2", x, 2*x);
         figureButtons.add(rect12Btn);        
         
-        FigureButton lineBtn = new LineButton("Связь со стрелкой");
+        FigureButton arrowBtn = new LineButton("Связь со стрелкой", true);
+        figureButtons.add(arrowBtn);
+
+        FigureButton lineBtn = new LineButton("Связь без стрелки", false);
         figureButtons.add(lineBtn);
         
         
@@ -51,6 +54,7 @@ public class ButtonPanel extends JPanel implements MouseListener, FigureButtonPr
         add(rect41Btn);
         add(rect12Btn);
         add(rect14Btn);
+        add(arrowBtn);
         add(lineBtn);
         add(controlPointBtn);
 

@@ -8,6 +8,7 @@ import java.awt.*;
 public class Line extends Shape {
 
     private int x1, y1, x2, y2;
+    private boolean isArrow;
 
     /**
      *
@@ -17,11 +18,12 @@ public class Line extends Shape {
      * @param y2
      * @param isArrow
      */
-    public Line(int x1, int y1, int x2, int y2) {
+    public Line(int x1, int y1, int x2, int y2, boolean isArrow) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
+        this.isArrow = isArrow;
     }
 
     @Override
@@ -32,7 +34,8 @@ public class Line extends Shape {
         
         if (Math.abs(x2-x1) > Math.abs(y2-y1)) {
             graphics2D.drawLine(x1, y1, x2, y1);
-            
+
+            if (isArrow) {
                 Stroke lineStroke = graphics2D.getStroke();
                 graphics2D.setStroke(new BasicStroke(2));
 
@@ -47,12 +50,12 @@ public class Line extends Shape {
                 }            
 
                 graphics2D.setStroke(lineStroke);
-            //}
+            }
             
         } else {
             graphics2D.drawLine(x1, y1, x1, y2);
             
-            //if(isArrow) {
+            if(isArrow) {
             
                 Stroke lineStroke = graphics2D.getStroke();
                 graphics2D.setStroke(new BasicStroke(2));
@@ -68,7 +71,7 @@ public class Line extends Shape {
                 }            
 
                 graphics2D.setStroke(lineStroke);
-            //}
+            }
         }        
         graphics2D.setStroke(oldStroke);
     }

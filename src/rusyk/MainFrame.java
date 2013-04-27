@@ -24,8 +24,14 @@ public class MainFrame extends JFrame implements DrawEvent.DrawEventListener {
         Toolkit tk = Toolkit.getDefaultToolkit();
         int xSize = ((int) tk.getScreenSize().getWidth());
         int ySize = ((int) tk.getScreenSize().getHeight());
-        //setSize(xSize, ySize);
-        setSize(1200, 700);
+        setSize(xSize, ySize);
+
+        //Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        //this.setSize(dim.width, dim.height);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setVisible(true);
+
+        //setSize(1200, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout(FlowLayout.CENTER));
