@@ -4,6 +4,7 @@ import rusyk.figures.Shape;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,22 @@ public class DrawPanel extends JPanel {
             shape.draw(g2d);
         }
     }
-    
+
+    @Override
+    protected void processMouseEvent(MouseEvent mouseEvent) {
+        super.processMouseEvent(mouseEvent);
+        if (MouseEvent.MOUSE_CLICKED == mouseEvent.getID()) {
+            for ( Shape shape : shapes ) {
+                if ( shape.hasPoint(mouseEvent.getX(),mouseEvent.getY())) {
+                    shape.select();
+                } else {
+                    shape.unselect();
+                }
+            }
+            repaint();
+        }
+    }
+
     private void drawScale(Graphics2D g2d) {
         final int width = getWidth();
         final int height = getHeight();
@@ -37,7 +53,7 @@ public class DrawPanel extends JPanel {
         final int start_y = height - SCALE_INDENT;
         
         g2d.setColor(Color.black);
-        g2d.setFont(new Font( "SansSerif", Font.BOLD, 12 ));
+        g2d.setFont(new Font( "Times New Roman", Font.BOLD, 12 ));
         
         g2d.drawLine(SCALE_INDENT, SCALE_INDENT, SCALE_INDENT, height - SCALE_INDENT); // vertical left
         g2d.drawLine(width - SCALE_INDENT, SCALE_INDENT, width - SCALE_INDENT, start_y); // vertical right

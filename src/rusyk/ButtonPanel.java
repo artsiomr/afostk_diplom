@@ -63,11 +63,24 @@ public class ButtonPanel extends JPanel implements MouseListener, FigureButtonPr
         }
     }
 
+
+    public boolean isAnybodyPressed() {
+        for (FigureButton btn : figureButtons) {
+            if(btn.isPressed()){
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         System.out.println("Mouse is clicked on draw panel");
         for (FigureButton btn : figureButtons) {
             btn.mouseClicked(e);
+        }
+        if(!isAnybodyPressed()) {
+
         }
     }
 

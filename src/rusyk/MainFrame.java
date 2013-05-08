@@ -17,6 +17,7 @@ public class MainFrame extends JFrame implements DrawEvent.DrawEventListener {
     private DrawPanel xPanel;
     private DrawPanel yPanel;
     private ButtonPanel btnPanel = new ButtonPanel();
+    private ActionPanel actPanel = new ActionPanel();
 
     public MainFrame() {
         super("Автоматизация формального описания систем телекоммуникаций");

@@ -29,7 +29,7 @@ public class ControlPoint extends Shape {
         graphics2D.setStroke(new BasicStroke(thickness));
         graphics2D.drawOval(x1-2, y1-2, 4, 4);
         
-        graphics2D.setFont(new Font( "SansSerif", Font.BOLD, 12 ));
+        graphics2D.setFont(new Font( "Times New Roman", Font.BOLD, 12 ));
         graphics2D.drawString("Точка", this.x1-15, this.y1-10);
         
         //graphics2D.drawLine(x1, y1, x2, y2);
