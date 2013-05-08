@@ -49,6 +49,12 @@ public class MainFrame extends JFrame implements DrawEvent.DrawEventListener {
         drawPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         drawPanel.addMouseListener(btnPanel);
         add(drawPanel);
+
+        actPanel.setPreferredSize(new Dimension(150, 710));
+        actPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        add(actPanel);
+
+
         
         setVisible(true);
     }

@@ -5,5 +5,5 @@ package rusyk.bus;
  */
 public interface ШинныйПодписчик {
 
-    void оповестить(Object... аргументы);
+    void оповестить(String имяСобытия, Object... аргументы);
 }

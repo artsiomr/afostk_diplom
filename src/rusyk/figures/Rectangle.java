@@ -5,12 +5,13 @@ import java.awt.*;
 /**
  * @author Maksim Turchyn
  */
-public class Rectangle extends Shape {
+public class Rectangle extends NamedShape {
 
     private int x, y;
     private int width, height;
     private static int count;
     private int index;
+
 
     public Rectangle(int x, int y, int width, int height) {
         this.x = x;
@@ -19,6 +20,7 @@ public class Rectangle extends Shape {
         this.height = height;
         count++;
         index = count;
+        setName("Блок " + index);
     }
 
     @Override
@@ -42,8 +44,9 @@ public class Rectangle extends Shape {
         graphics2D.drawRect(x, y, width, height);
         
         graphics2D.setFont(new Font( "Times New Roman", Font.BOLD, 12 ));
-        graphics2D.drawString("Блок " + index, this.x+5, this.y+20);
-        
+        graphics2D.drawString(String.valueOf(index), this.x+width-10, this.y-5);
+        graphics2D.drawString(getName(), this.x+20, this.y+15);
+
         graphics2D.setStroke(oldStroke);
 
     }

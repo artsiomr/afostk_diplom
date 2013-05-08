@@ -1,5 +1,7 @@
 package rusyk;
 
+import rusyk.bus.СобытийнаяШина;
+import rusyk.bus.ШинныйПодписчик;
 import rusyk.figures.Shape;
 
 import javax.swing.*;
@@ -11,13 +13,17 @@ import java.util.List;
 /**
  * @author Maksim Turchyn
  */
-public class DrawPanel extends JPanel {
+public class DrawPanel extends JPanel implements ШинныйПодписчик {
 
 
     public static final int GRID_STEP = 6;
     public static final int SCALE_INDENT = 40;
     
     private List<rusyk.figures.Shape> shapes = new ArrayList<rusyk.figures.Shape>();
+
+    public DrawPanel() {
+        СобытийнаяШина.подписатьсяНаСобытие("перерисовать.фигуры", this);
+    }
 
     @Override
     public void paintComponent(Graphics g) {
@@ -37,6 +43,7 @@ public class DrawPanel extends JPanel {
             for ( Shape shape : shapes ) {
                 if ( shape.hasPoint(mouseEvent.getX(),mouseEvent.getY())) {
                     shape.select();
+                    СобытийнаяШина.опубликоватьСобытие("shape selection", shape);
                 } else {
                     shape.unselect();
                 }
@@ -114,5 +121,12 @@ public class DrawPanel extends JPanel {
         System.out.println("Drawing new shape");
         shapes.add(shape);
         repaint();
+    }
+
+    @Override
+    public void оповестить(String имяСобытия, Object... аргументы) {
+        if (имяСобытия.equals("перерисовать.фигуры")) {
+            this.repaint();
+        }
     }
 }

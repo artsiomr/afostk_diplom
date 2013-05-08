@@ -10,17 +10,17 @@ import java.util.Map;
  */
 public class СобытийнаяШина {
 
-    private Map<String, List<ШинныйПодписчик>> картаПодписчиков = new HashMap<String, List<ШинныйПодписчик>>();
+    private static Map<String, List<ШинныйПодписчик>> картаПодписчиков = new HashMap<String, List<ШинныйПодписчик>>();
 
-    public void опубликоватьСобытие(final String имяСобытия, Object... аргументы) {
+    public static void опубликоватьСобытие(final String имяСобытия, Object... аргументы) {
         if (!картаПодписчиков.containsKey(имяСобытия)) return;
 
         for (ШинныйПодписчик подписчик : картаПодписчиков.get(имяСобытия)) {
-            подписчик.оповестить(аргументы);
+            подписчик.оповестить(имяСобытия, аргументы);
         }
     }
 
-    public void подписатьсяНаСобытие(final String имяСобытия, ШинныйПодписчик подписчик) {
+    public static void подписатьсяНаСобытие(final String имяСобытия, ШинныйПодписчик подписчик) {
         if (!картаПодписчиков.containsKey(имяСобытия)) {
             картаПодписчиков.put(имяСобытия, new ArrayList<ШинныйПодписчик>());
         }
