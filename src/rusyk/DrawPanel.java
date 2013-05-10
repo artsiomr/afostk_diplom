@@ -18,7 +18,7 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
 
     public static final int GRID_STEP = 6;
     public static final int SCALE_INDENT = 40;
-    
+
     private List<rusyk.figures.Shape> shapes = new ArrayList<rusyk.figures.Shape>();
 
     public DrawPanel() {
@@ -38,48 +38,61 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
 
     @Override
     protected void processMouseEvent(MouseEvent mouseEvent) {
-        super.processMouseEvent(mouseEvent);
+        // super.processMouseEvent(mouseEvent);
+
+        boolean smthWasSelected = false;
+
         if (MouseEvent.MOUSE_CLICKED == mouseEvent.getID()) {
-            for ( Shape shape : shapes ) {
-                if ( shape.hasPoint(mouseEvent.getX(),mouseEvent.getY())) {
-                    shape.select();
-                    СобытийнаяШина.опубликоватьСобытие("shape selection", shape);
+            for (Shape shape : shapes) {
+
+                if (shape.hasPoint(mouseEvent.getX(), mouseEvent.getY())) {
+                    if (!smthWasSelected) {
+                        shape.select();
+                        smthWasSelected = true;
+                        СобытийнаяШина.опубликоватьСобытие("shape selection", shape);
+                    }
                 } else {
                     shape.unselect();
                 }
+
+
             }
-            repaint();
         }
+        if (!smthWasSelected) {
+            super.processMouseEvent(mouseEvent);
+        }
+
+        repaint();
     }
 
     private void drawScale(Graphics2D g2d) {
         final int width = getWidth();
         final int height = getHeight();
-        
+
         final int start_x = SCALE_INDENT;
         final int start_y = height - SCALE_INDENT;
-        
+
         g2d.setColor(Color.black);
-        g2d.setFont(new Font( "Times New Roman", Font.BOLD, 12 ));
-        
+        g2d.setFont(new Font("Times New Roman", Font.BOLD, 12));
+
         g2d.drawLine(SCALE_INDENT, SCALE_INDENT, SCALE_INDENT, height - SCALE_INDENT); // vertical left
         g2d.drawLine(width - SCALE_INDENT, SCALE_INDENT, width - SCALE_INDENT, start_y); // vertical right
         g2d.drawLine(SCALE_INDENT, SCALE_INDENT, width - SCALE_INDENT, SCALE_INDENT); // horizontal top
         g2d.drawLine(SCALE_INDENT, start_y, width - SCALE_INDENT, start_y); // horizontal bottom
-        
+
         int scale = 0;
-                
+
         for (int i = start_x - 3; i < width - SCALE_INDENT; i += 30) {
-            
+
             String scale_string = Integer.toString(scale);
             g2d.drawString(scale_string, i, start_y + 20);
             //g2d.drawLine(i, (int) getAlignmentY(), i, (int)(getAlignmentY() + height - SCALE_INDENT));
             scale += 1;
-        }        
-        
+        }
+
         scale = 0;
         for (int i = start_y + 4; i > SCALE_INDENT; i -= 30) {
-            
+
             String scale_string = Integer.toString(scale);
             g2d.drawString(scale_string, start_x - 20, i);
             //g2d.drawLine(i, (int) getAlignmentY(), i, (int)(getAlignmentY() + height - SCALE_INDENT));
@@ -89,21 +102,21 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
         //for (int i = 0; i < height - SCALE_INDENT; i += GRID_STEP) {
         //    g2d.drawLine((int) getAlignmentX() + SCALE_INDENT, i, (int)(getAlignmentX() + width), i);
         //}
-        
+
     }
 
     private void drawGrid(Graphics2D g2d) {
         final int width = getWidth();
         final int height = getHeight();
-        
+
         g2d.setColor(Color.yellow);
-        
-        for (int i = SCALE_INDENT; i < width-SCALE_INDENT; i += GRID_STEP) {
-            g2d.drawLine(i, (int) getAlignmentY() + SCALE_INDENT, i, (int)(getAlignmentY() + height - SCALE_INDENT));
+
+        for (int i = SCALE_INDENT; i < width - SCALE_INDENT; i += GRID_STEP) {
+            g2d.drawLine(i, (int) getAlignmentY() + SCALE_INDENT, i, (int) (getAlignmentY() + height - SCALE_INDENT));
         }
 
         for (int i = height - SCALE_INDENT; i > SCALE_INDENT; i -= GRID_STEP) {
-            g2d.drawLine((int) getAlignmentX() + SCALE_INDENT, i, (int)(getAlignmentX() + width - SCALE_INDENT), i);
+            g2d.drawLine((int) getAlignmentX() + SCALE_INDENT, i, (int) (getAlignmentX() + width - SCALE_INDENT), i);
         }
 
     }
