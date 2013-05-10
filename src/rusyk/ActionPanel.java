@@ -17,16 +17,37 @@ import java.awt.event.MouseEvent;
  */
 public class ActionPanel extends JPanel implements ШинныйПодписчик {
 
+
+    // поле "Номер блока"
+    JLabel numberLabel;
+    JTextField numberField;
+
+    // поле "Название блока"
+    JLabel nameLabel;
     JTextField nameField;
+
     JButton saveBtn;
+    JButton deleteBtn;
     Rectangle rectangle;
 
     public ActionPanel() {
         СобытийнаяШина.подписатьсяНаСобытие("shape selection", this);
 
+
+        // поле "Номер блока"
+        numberLabel = new JLabel("Номер блока: ");
+        numberField = new JTextField();
+        numberField.setColumns(10);
+        add(numberLabel);
+        add(numberField);
+
+        // поле "Название блока"
+        nameLabel = new JLabel("Название блока: ");
         nameField = new JTextField();
         nameField.setColumns(10);
+        add(nameLabel);
         add(nameField);
+
 
         saveBtn = new JButton("Сохранить") {
             @Override
@@ -41,6 +62,20 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
             }
         };
         add(saveBtn);
+
+        deleteBtn = new JButton("Удалить") {
+            @Override
+            protected void processMouseEvent(MouseEvent mouseEvent) {
+                super.processMouseEvent(mouseEvent);
+                if (MouseEvent.MOUSE_CLICKED == mouseEvent.getID()) {
+                    if (rectangle != null) {
+                        СобытийнаяШина.опубликоватьСобытие("удалить.фигуру", rectangle);
+                    }
+
+                }
+            }
+        };
+        add(deleteBtn);
     }
 
     @Override

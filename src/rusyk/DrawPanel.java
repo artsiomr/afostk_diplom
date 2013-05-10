@@ -23,6 +23,7 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
 
     public DrawPanel() {
         СобытийнаяШина.подписатьсяНаСобытие("перерисовать.фигуры", this);
+        СобытийнаяШина.подписатьсяНаСобытие("удалить.фигуру", this);
     }
 
     @Override
@@ -136,10 +137,18 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
         repaint();
     }
 
+    public void delete(final Shape shape) {
+        System.out.println("Removing the shape");
+        shapes.remove(shape);
+        repaint();
+    }
+
     @Override
     public void оповестить(String имяСобытия, Object... аргументы) {
         if (имяСобытия.equals("перерисовать.фигуры")) {
             this.repaint();
+        } else if (имяСобытия.equals("удалить.фигуру")) {
+            delete((Shape)аргументы[0]);
         }
     }
 }
