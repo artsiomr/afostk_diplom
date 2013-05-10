@@ -1,11 +1,12 @@
 package rusyk.figures;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * @author Maksim Turchyn
  */
-public abstract class Shape {
+public abstract class Shape implements Serializable {
 
     protected boolean selected;
 
