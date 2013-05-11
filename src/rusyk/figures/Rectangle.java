@@ -20,6 +20,7 @@ public class Rectangle extends NamedShape {
         this.height = height;
         count++;
         index = count;
+        setNumber(String.valueOf(index));
         setName("Блок " + index);
     }
 
@@ -44,7 +45,8 @@ public class Rectangle extends NamedShape {
         graphics2D.drawRect(x, y, width, height);
         
         graphics2D.setFont(new Font( "Times New Roman", Font.BOLD, 12 ));
-        graphics2D.drawString(String.valueOf(index), this.x+width-10, this.y-5);
+
+        graphics2D.drawString(getNumber(), this.x+width-10, this.y-5);
         graphics2D.drawString(getName(), this.x+20, this.y+15);
 
         graphics2D.setStroke(oldStroke);

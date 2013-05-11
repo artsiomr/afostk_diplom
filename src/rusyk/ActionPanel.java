@@ -56,6 +56,7 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
                 if (MouseEvent.MOUSE_CLICKED == mouseEvent.getID()) {
                     if (rectangle != null) {
                         rectangle.setName(nameField.getText());
+                        rectangle.setNumber(numberField.getText());
                     }
                     СобытийнаяШина.опубликоватьСобытие("перерисовать.фигуры");
                 }
@@ -83,6 +84,7 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
         Shape shape = (Shape) аргументы[0];
         if (shape instanceof Rectangle) {
             rectangle = (Rectangle) shape;
+            numberField.setText(rectangle.getNumber());
             nameField.setText(rectangle.getName());
         }
 
