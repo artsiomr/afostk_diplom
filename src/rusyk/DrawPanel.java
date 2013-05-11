@@ -3,10 +3,12 @@ package rusyk;
 import rusyk.bus.СобытийнаяШина;
 import rusyk.bus.ШинныйПодписчик;
 import rusyk.figures.Shape;
+import rusyk.io.ShapeManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +21,15 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
     public static final int GRID_STEP = 6;
     public static final int SCALE_INDENT = 40;
 
+    private ShapeManager shapeManager = new ShapeManager();
+
     private List<rusyk.figures.Shape> shapes = new ArrayList<rusyk.figures.Shape>();
 
     public DrawPanel() {
         СобытийнаяШина.подписатьсяНаСобытие("перерисовать.фигуры", this);
         СобытийнаяШина.подписатьсяНаСобытие("удалить.фигуру", this);
+        СобытийнаяШина.подписатьсяНаСобытие("сохранить.фигуры", this);
+        СобытийнаяШина.подписатьсяНаСобытие("загрузить.фигуры", this);
     }
 
     @Override
@@ -149,6 +155,13 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
             this.repaint();
         } else if (имяСобытия.equals("удалить.фигуру")) {
             delete((Shape)аргументы[0]);
+        } else if (имяСобытия.equals("загрузить.фигуры")) {
+            List<Shape> shapeList = shapeManager.load((File) аргументы[0]);
+            shapes.clear();
+            shapes.addAll(shapeList);
+            repaint();
+        } else if (имяСобытия.equals(("сохранить.фигуры")))  {
+            shapeManager.save(shapes, (File)аргументы[0]);
         }
     }
 }
