@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
  */
 public class ActionPanel extends JPanel implements ШинныйПодписчик {
 
+    private MainFrame mainFrame;
 
     // поле "Номер блока"
     JLabel numberLabel;
@@ -26,11 +27,17 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
     JLabel nameLabel;
     JTextField nameField;
 
+    // поле для загрузки файла в фигуру
+    JButton addFile;
+
     JButton saveBtn;
     JButton deleteBtn;
     Rectangle rectangle;
 
     public ActionPanel() {
+
+        this.mainFrame = mainFrame;
+
         СобытийнаяШина.подписатьсяНаСобытие("shape selection", this);
 
 
@@ -48,6 +55,26 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
         add(nameLabel);
         add(nameField);
 
+        // поле для загрузки файла в фигуру
+
+        addFile = new JButton("Добавить файл") {
+            @Override
+            protected void processMouseEvent(MouseEvent mouseEvent) {
+                super.processMouseEvent(mouseEvent);
+                if (MouseEvent.MOUSE_CLICKED == mouseEvent.getID()) {
+                    if (rectangle != null) {
+                        JFileChooser fileChooser = new JFileChooser();
+                        // Demonstrate "Open" dialog:
+                        int rVal = fileChooser.showOpenDialog(mainFrame);
+                        if (rVal == JFileChooser.APPROVE_OPTION) {
+                            //
+                            UploadedFile file = new UploadedFile(fileChooser.getSelectedFile());
+                        }
+                    }
+                }
+            }
+        };
+        add(addFile);
 
         saveBtn = new JButton("Сохранить") {
             @Override

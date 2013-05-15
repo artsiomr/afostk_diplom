@@ -9,6 +9,9 @@ package rusyk.figures;
  */
 public abstract class NamedShape extends Shape {
 
+
+    // TODO: вынести в отдельный класс поле number
+
     private String number;
     private String name;
 
