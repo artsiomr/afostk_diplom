@@ -5,7 +5,7 @@ import java.awt.*;
 /**
  * @author Maksim Turchyn
  */
-public class Rectangle extends NamedShape {
+public class Rectangle extends FileShape {
 
     private int x, y;
     private int width, height;
