@@ -13,12 +13,25 @@ import java.util.List;
  * Time: 21:21
  * To change this template use File | Settings | File Templates.
  */
-public abstract class FileShape extends NamedShape {
+public abstract class FileShape extends NumberShape {
 
     private List<UploadedFile> files = new ArrayList<UploadedFile>();
 
     public List<UploadedFile> getFiles() {
         return files;
+    }
+
+    public String getFileNames() {
+
+        String fileNames = null;
+
+        for (UploadedFile file : this.files ) {
+
+            fileNames += file.getFileName() + "\n ";
+
+        }
+
+        return fileNames;
     }
 
     public void addFile(UploadedFile file) {

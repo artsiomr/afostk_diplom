@@ -9,20 +9,7 @@ package rusyk.figures;
  */
 public abstract class NamedShape extends Shape {
 
-
-    // TODO: вынести в отдельный класс поле number
-
-    private String number;
     private String name;
-
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
 
     public String getName() {
         return name;
