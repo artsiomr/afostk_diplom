@@ -2,10 +2,12 @@ package rusyk;
 
 import rusyk.bus.СобытийнаяШина;
 import rusyk.bus.ШинныйПодписчик;
+import rusyk.figures.Line;
 import rusyk.figures.Rectangle;
 import rusyk.figures.Shape;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 
 /**
@@ -27,12 +29,17 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
     JLabel nameLabel;
     JTextField nameField;
 
+    // названия прикрепленных файлов
+    JLabel filenameLabel;
+    private String filenames = "";
+
     // поле для загрузки файла в фигуру
     JButton addFile;
 
     JButton saveBtn;
     JButton deleteBtn;
     Rectangle rectangle;
+    Shape shape;
 
     public ActionPanel() {
 
@@ -45,6 +52,8 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
         numberLabel = new JLabel("Номер блока: ");
         numberField = new JTextField();
         numberField.setColumns(10);
+        numberLabel.setVisible(false);
+        numberField.setVisible(false);
         add(numberLabel);
         add(numberField);
 
@@ -52,8 +61,18 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
         nameLabel = new JLabel("Название блока: ");
         nameField = new JTextField();
         nameField.setColumns(10);
+        nameLabel.setVisible(false);
+        nameField.setVisible(false);
         add(nameLabel);
         add(nameField);
+
+
+        filenameLabel = new JLabel();
+        filenameLabel.setVisible(false);
+        if (rectangle != null) {
+            filenameLabel.setText(rectangle.getFileNames());
+        }
+        add(filenameLabel);
 
         // поле для загрузки файла в фигуру
 
@@ -69,11 +88,13 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
                         if (rVal == JFileChooser.APPROVE_OPTION) {
                             //
                             UploadedFile file = new UploadedFile(fileChooser.getSelectedFile());
+                            rectangle.addFile(file);
                         }
                     }
                 }
             }
         };
+        addFile.setVisible(false);
         add(addFile);
 
         saveBtn = new JButton("Сохранить") {
@@ -89,6 +110,7 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
                 }
             }
         };
+        saveBtn.setVisible(false);
         add(saveBtn);
 
         deleteBtn = new JButton("Удалить") {
@@ -98,11 +120,14 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
                 if (MouseEvent.MOUSE_CLICKED == mouseEvent.getID()) {
                     if (rectangle != null) {
                         СобытийнаяШина.опубликоватьСобытие("удалить.фигуру", rectangle);
+                    } else if (shape != null) {
+                        СобытийнаяШина.опубликоватьСобытие("удалить.фигуру", shape);
                     }
 
                 }
             }
         };
+        deleteBtn.setVisible(false);
         add(deleteBtn);
     }
 
@@ -110,9 +135,29 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
     public void оповестить(String eventName, Object... аргументы) {
         Shape shape = (Shape) аргументы[0];
         if (shape instanceof Rectangle) {
-            rectangle = (Rectangle) shape;
+            this.rectangle = (Rectangle) shape;
+            this.shape = null;
+            numberLabel.setVisible(true);
+            numberField.setVisible(true);
+            nameLabel.setVisible(true);
+            nameField.setVisible(true);
+            filenameLabel.setVisible(true);
+            saveBtn.setVisible(true);
+            addFile.setVisible(true);
+            deleteBtn.setVisible(true);
             numberField.setText(rectangle.getNumber());
             nameField.setText(rectangle.getName());
+        } else {
+            this.rectangle = null;
+            this.shape = (Shape) shape;
+            numberLabel.setVisible(false);
+            numberField.setVisible(false);
+            nameLabel.setVisible(false);
+            nameField.setVisible(false);
+            filenameLabel.setVisible(false);
+            saveBtn.setVisible(false);
+            addFile.setVisible(false);
+            deleteBtn.setVisible(true);
         }
 
     }
