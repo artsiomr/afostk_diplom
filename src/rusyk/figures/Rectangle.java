@@ -7,8 +7,8 @@ import java.awt.*;
  */
 public class Rectangle extends FileShape {
 
-    private int x, y;
-    private int width, height;
+    protected int x, y;
+    protected int width, height;
     private static int count;
     private int index;
 

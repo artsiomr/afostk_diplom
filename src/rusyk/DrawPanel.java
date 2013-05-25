@@ -2,6 +2,7 @@ package rusyk;
 
 import rusyk.bus.СобытийнаяШина;
 import rusyk.bus.ШинныйПодписчик;
+import rusyk.figures.InvisibleRectangle;
 import rusyk.figures.Shape;
 import rusyk.io.ShapeManager;
 
@@ -20,7 +21,7 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
 
     public static final int GRID_STEP = 6;
     public static final int SCALE_INDENT = 40;
-
+    public InvisibleRectangle title = new InvisibleRectangle(100, 50, 800, 70, "TESTSTST");
     private ShapeManager shapeManager = new ShapeManager();
 
     private List<rusyk.figures.Shape> shapes = new ArrayList<rusyk.figures.Shape>();
@@ -38,6 +39,8 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
         Graphics2D g2d = (Graphics2D) g;
         drawGrid(g2d);
         drawScale(g2d);
+        title.draw(g2d);
+        shapes.add(title);
         for (Shape shape : shapes) {
             shape.draw(g2d);
         }

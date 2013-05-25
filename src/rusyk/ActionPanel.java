@@ -2,6 +2,7 @@ package rusyk;
 
 import rusyk.bus.СобытийнаяШина;
 import rusyk.bus.ШинныйПодписчик;
+import rusyk.figures.InvisibleRectangle;
 import rusyk.figures.Line;
 import rusyk.figures.Rectangle;
 import rusyk.figures.Shape;
@@ -104,7 +105,9 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
                 if (MouseEvent.MOUSE_CLICKED == mouseEvent.getID()) {
                     if (rectangle != null) {
                         rectangle.setName(nameField.getText());
-                        rectangle.setNumber(numberField.getText());
+                        if (numberField.isVisible()) {
+                            rectangle.setNumber(numberField.getText());
+                        }
                     }
                     СобытийнаяШина.опубликоватьСобытие("перерисовать.фигуры");
                 }
@@ -134,7 +137,18 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
     @Override
     public void оповестить(String eventName, Object... аргументы) {
         Shape shape = (Shape) аргументы[0];
-        if (shape instanceof Rectangle) {
+        if (shape instanceof InvisibleRectangle) {
+            this.rectangle = (InvisibleRectangle)shape;
+            numberLabel.setVisible(false);
+            numberField.setVisible(false);
+            nameLabel.setVisible(true);
+            nameField.setVisible(true);
+            filenameLabel.setVisible(false);
+            saveBtn.setVisible(true);
+            addFile.setVisible(false);
+            deleteBtn.setVisible(false);
+            nameField.setText(rectangle.getName());
+        } else if (shape instanceof Rectangle) {
             this.rectangle = (Rectangle) shape;
             this.shape = null;
             numberLabel.setVisible(true);
@@ -149,7 +163,7 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
             nameField.setText(rectangle.getName());
         } else {
             this.rectangle = null;
-            this.shape = (Shape) shape;
+            this.shape = shape;
             numberLabel.setVisible(false);
             numberField.setVisible(false);
             nameLabel.setVisible(false);
@@ -159,6 +173,5 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
             addFile.setVisible(false);
             deleteBtn.setVisible(true);
         }
-
     }
 }
