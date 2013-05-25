@@ -23,6 +23,9 @@ public class ButtonPanel extends JPanel implements MouseListener, FigureButtonPr
     private List<FigureButton> figureButtons = new ArrayList<FigureButton>();
 
     public ButtonPanel() {
+
+        JLabel fieldLabel = new JLabel("Создать объект");
+
         
         FigureButton rect41Btn = new RectangleButton("Блок 4x1", 4*x, x);
         figureButtons.add(rect41Btn);
@@ -49,6 +52,7 @@ public class ButtonPanel extends JPanel implements MouseListener, FigureButtonPr
         FigureButton controlPointBtn = new ControlPointButton("Точка");
         figureButtons.add(controlPointBtn);
         
+        add(fieldLabel);
         add(rect11Btn);
         add(rect21Btn);
         add(rect41Btn);

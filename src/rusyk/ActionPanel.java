@@ -48,6 +48,8 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
 
         СобытийнаяШина.подписатьсяНаСобытие("shape selection", this);
 
+        JLabel fieldLabel = new JLabel("Доступные действия:");
+        add(fieldLabel);
 
         // поле "Номер блока"
         numberLabel = new JLabel("Номер блока: ");
