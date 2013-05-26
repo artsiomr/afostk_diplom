@@ -29,8 +29,9 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
     public DrawPanel() {
         СобытийнаяШина.подписатьсяНаСобытие("перерисовать.фигуры", this);
         СобытийнаяШина.подписатьсяНаСобытие("удалить.фигуру", this);
-        СобытийнаяШина.подписатьсяНаСобытие("сохранить.фигуры", this);
-        СобытийнаяШина.подписатьсяНаСобытие("загрузить.фигуры", this);
+        СобытийнаяШина.подписатьсяНаСобытие("сохранить.в.файл.фигуры", this);
+        СобытийнаяШина.подписатьсяНаСобытие("загрузить.из.файла.фигуры", this);
+        shapes.add(title);
     }
 
     @Override
@@ -39,8 +40,6 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
         Graphics2D g2d = (Graphics2D) g;
         drawGrid(g2d);
         drawScale(g2d);
-        title.draw(g2d);
-        shapes.add(title);
         for (Shape shape : shapes) {
             shape.draw(g2d);
         }
@@ -48,7 +47,6 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
 
     @Override
     protected void processMouseEvent(MouseEvent mouseEvent) {
-        // super.processMouseEvent(mouseEvent);
 
         boolean smthWasSelected = false;
 
@@ -64,8 +62,6 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
                 } else {
                     shape.unselect();
                 }
-
-
             }
         }
         if (!smthWasSelected) {
@@ -96,7 +92,6 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
 
             String scale_string = Integer.toString(scale);
             g2d.drawString(scale_string, i, start_y + 20);
-            //g2d.drawLine(i, (int) getAlignmentY(), i, (int)(getAlignmentY() + height - SCALE_INDENT));
             scale += 1;
         }
 
@@ -105,14 +100,8 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
 
             String scale_string = Integer.toString(scale);
             g2d.drawString(scale_string, start_x - 20, i);
-            //g2d.drawLine(i, (int) getAlignmentY(), i, (int)(getAlignmentY() + height - SCALE_INDENT));
             scale += 1;
         }
-
-        //for (int i = 0; i < height - SCALE_INDENT; i += GRID_STEP) {
-        //    g2d.drawLine((int) getAlignmentX() + SCALE_INDENT, i, (int)(getAlignmentX() + width), i);
-        //}
-
     }
 
     private void drawGrid(Graphics2D g2d) {
@@ -158,12 +147,12 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
             this.repaint();
         } else if (имяСобытия.equals("удалить.фигуру")) {
             delete((Shape)аргументы[0]);
-        } else if (имяСобытия.equals("загрузить.фигуры")) {
+        } else if (имяСобытия.equals("загрузить.из.файла.фигуры")) {
             List<Shape> shapeList = shapeManager.load((File) аргументы[0]);
             shapes.clear();
             shapes.addAll(shapeList);
             repaint();
-        } else if (имяСобытия.equals(("сохранить.фигуры")))  {
+        } else if (имяСобытия.equals(("сохранить.в.файл.фигуры")))  {
             shapeManager.save(shapes, (File)аргументы[0]);
         }
     }
