@@ -10,7 +10,7 @@ import java.io.*;
  * Time: 21:24
  * To change this template use File | Settings | File Templates.
  */
-public class UploadedFile {
+public class UploadedFile implements Serializable {
 
     private String fileName;
     private byte[] content;
