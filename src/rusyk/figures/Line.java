@@ -39,7 +39,7 @@ public class Line extends Shape {
     @Override
     public void draw(Graphics2D graphics2D) {
         Stroke oldStroke = graphics2D.getStroke();
-        final int thickness = 3;
+        final int thickness = 2;
         //graphics2D.setStroke(new BasicStroke(thickness));
 
         final float dashness[] = {5.0f};
@@ -58,28 +58,35 @@ public class Line extends Shape {
         graphics2D.drawLine(x1, y1, x2, y2);
 
         if (isArrow) {
-            Stroke lineStroke = graphics2D.getStroke();
-            graphics2D.setStroke(new BasicStroke(2));
+
+            Polygon arrow = new Polygon();
+            int arrowHeight = 6;
+            int arrowWidth  = 3;
 
             if(x2>x1) {
                 //right arrow
-                graphics2D.drawLine(x2+2, y1, x2-6, y1-6);
-                graphics2D.drawLine(x2+2, y1, x2-6, y1+6);
+                arrow.addPoint(x2, y1);
+                arrow.addPoint(x2 - arrowHeight, y1 + arrowWidth);
+                arrow.addPoint(x2 - arrowHeight, y1 - arrowWidth);
             } else if (x1>x2) {
                 //left arrow
-                graphics2D.drawLine(x2-2, y1, x2+6, y1-6);
-                graphics2D.drawLine(x2-2, y1, x2+6, y1+6);
+                arrow.addPoint(x2, y1);
+                arrow.addPoint(x2 + arrowHeight, y1 + arrowWidth);
+                arrow.addPoint(x2 + arrowHeight, y1 - arrowWidth);
             } else if(y2>y1) {
                 //down arrow
-                graphics2D.drawLine(x1, y2+2, x1-6, y2-6);
-                graphics2D.drawLine(x1, y2+2, x1+6, y2-6);
+                arrow.addPoint(x2, y2);
+                arrow.addPoint(x2 - arrowWidth, y2 - arrowHeight);
+                arrow.addPoint(x2 + arrowWidth, y2 - arrowHeight);
             } else if (y1>y2) {
                 //up arrow
-                graphics2D.drawLine(x1, y2-2, x1+6, y2+6);
-                graphics2D.drawLine(x1, y2-2, x1-6, y2+6);
+                arrow.addPoint(x1, y2);
+                arrow.addPoint(x2 - arrowWidth, y2 + arrowHeight);
+                arrow.addPoint(x2 + arrowWidth, y2 + arrowHeight);
             }
 
-            graphics2D.setStroke(lineStroke);
+            graphics2D.draw(arrow);
+            graphics2D.fillPolygon(arrow);
         }
 
         graphics2D.setStroke(oldStroke);
