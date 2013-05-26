@@ -26,7 +26,7 @@ public class SaveAsDialog implements ActionListener {
         // Demonstrate "Save" dialog:
         int rVal = fileChooser.showSaveDialog(mainFrame);
         if (rVal == JFileChooser.APPROVE_OPTION) {
-            СобытийнаяШина.опубликоватьСобытие("сохранить.фигуры", fileChooser.getSelectedFile());
+            СобытийнаяШина.опубликоватьСобытие("сохранить.в.файл.фигуры", fileChooser.getSelectedFile());
         }
     }
 }

@@ -26,7 +26,7 @@ public class LoadDialog implements ActionListener {
         // Demonstrate "Open" dialog:
         int rVal = fileChooser.showOpenDialog(mainFrame);
         if (rVal == JFileChooser.APPROVE_OPTION) {
-            СобытийнаяШина.опубликоватьСобытие("загрузить.фигуры", fileChooser.getSelectedFile());
+            СобытийнаяШина.опубликоватьСобытие("загрузить.из.файла.фигуры", fileChooser.getSelectedFile());
         }
 
     }
