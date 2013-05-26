@@ -7,11 +7,11 @@ import rusyk.event.DrawEvent;
 import rusyk.event.FigureButtonPressEvent;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
-import rusyk.buttons.ControlPointButton;
 
 /**
  * @author Maksim Turchyn
@@ -26,31 +26,41 @@ public class ButtonPanel extends JPanel implements MouseListener, FigureButtonPr
 
         JLabel fieldLabel = new JLabel("Создать объект");
 
-        
+        int buttonDimensionX = 100;
+        int buttonDimensionY = 20;
+
         FigureButton rect41Btn = new RectangleButton("Блок 4x1", 4*x, x);
+        rect41Btn.setPreferredSize(new Dimension(buttonDimensionX, buttonDimensionY));
         figureButtons.add(rect41Btn);
         
         FigureButton rect21Btn = new RectangleButton("Блок 2x1", 2*x, x);
+        rect21Btn.setPreferredSize(new Dimension(buttonDimensionX, buttonDimensionY));
         figureButtons.add(rect21Btn);
         
         FigureButton rect11Btn = new RectangleButton("Блок 1x1", x, x);
+        rect11Btn.setPreferredSize(new Dimension(buttonDimensionX, buttonDimensionY));
         figureButtons.add(rect11Btn);
         
         FigureButton rect14Btn = new RectangleButton("Блок 1x4", x, 4*x);
+        rect14Btn.setPreferredSize(new Dimension(buttonDimensionX, buttonDimensionY));
         figureButtons.add(rect14Btn);
         
         FigureButton rect12Btn = new RectangleButton("Блок 1x2", x, 2*x);
+        rect12Btn.setPreferredSize(new Dimension(buttonDimensionX, buttonDimensionY));
         figureButtons.add(rect12Btn);        
         
-        FigureButton arrowBtn = new LineButton("Связь со стрелкой", true);
+        FigureButton arrowBtn = new LineButton("Стрелка", true);
+        arrowBtn.setPreferredSize(new Dimension(buttonDimensionX, buttonDimensionY));
         figureButtons.add(arrowBtn);
 
-        FigureButton lineBtn = new LineButton("Связь без стрелки", false);
+        FigureButton lineBtn = new LineButton("Линия", false);
+        lineBtn.setPreferredSize(new Dimension(buttonDimensionX, buttonDimensionY));
         figureButtons.add(lineBtn);
         
         
-        FigureButton controlPointBtn = new ControlPointButton("Точка");
-        figureButtons.add(controlPointBtn);
+        //FigureButton controlPointBtn = new ControlPointButton("Точка");
+        //controlPointBtn.setPreferredSize(new Dimension(buttonDimensionX, buttonDimensionY));
+        //figureButtons.add(controlPointBtn);
         
         add(fieldLabel);
         add(rect11Btn);
@@ -60,7 +70,7 @@ public class ButtonPanel extends JPanel implements MouseListener, FigureButtonPr
         add(rect14Btn);
         add(arrowBtn);
         add(lineBtn);
-        add(controlPointBtn);
+        //add(controlPointBtn);
 
         for (FigureButton btn : figureButtons) {
             btn.addFigureButtonPressListener(this);
