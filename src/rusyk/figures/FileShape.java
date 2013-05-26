@@ -15,26 +15,17 @@ import java.util.List;
  */
 public abstract class FileShape extends NumberShape {
 
-    private List<UploadedFile> files = new ArrayList<UploadedFile>();
+    private UploadedFile file = new UploadedFile();
 
-    public List<UploadedFile> getFiles() {
-        return files;
+    public UploadedFile getFile() {
+        return file;
     }
 
-    public String getFileNames() {
-
-        String fileNames = null;
-
-        for (UploadedFile file : this.files ) {
-
-            fileNames += file.getFileName() + "\n ";
-
-        }
-
-        return fileNames;
+    public String getFileName() {
+        return file.getFileName();
     }
 
-    public void addFile(UploadedFile file) {
-        files.add(file);
+    public void addFile(UploadedFile newFile) {
+        file = newFile;
     }
 }

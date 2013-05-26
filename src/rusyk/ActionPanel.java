@@ -32,7 +32,6 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
 
     // названия прикрепленных файлов
     JLabel filenameLabel;
-    private String filenames = "";
 
     // поле для загрузки файла в фигуру
     JButton addFile;
@@ -72,9 +71,6 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
 
         filenameLabel = new JLabel();
         filenameLabel.setVisible(false);
-        if (rectangle != null) {
-            filenameLabel.setText(rectangle.getFileNames());
-        }
         add(filenameLabel);
 
         // поле для загрузки файла в фигуру
@@ -92,6 +88,7 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
                             //
                             UploadedFile file = new UploadedFile(fileChooser.getSelectedFile());
                             rectangle.addFile(file);
+                            filenameLabel.setText(rectangle.getFileName());
                         }
                     }
                 }
@@ -163,6 +160,7 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
             deleteBtn.setVisible(true);
             numberField.setText(rectangle.getNumber());
             nameField.setText(rectangle.getName());
+            filenameLabel.setText(rectangle.getFileName());
         } else {
             this.rectangle = null;
             this.shape = shape;
