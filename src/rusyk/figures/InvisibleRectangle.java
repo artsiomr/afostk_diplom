@@ -14,6 +14,7 @@ public class InvisibleRectangle extends Rectangle {
     public InvisibleRectangle(int x, int y, int width, int height, String title) {
         super(x, y, width, height);
         setName(title);
+        count--;
     }
 
     public void draw(Graphics2D graphics2D) {

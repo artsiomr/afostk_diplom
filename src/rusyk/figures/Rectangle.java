@@ -9,7 +9,7 @@ public class Rectangle extends FileShape {
 
     protected int x, y;
     protected int width, height;
-    private static int count;
+    protected static int count;
     private int index;
 
 

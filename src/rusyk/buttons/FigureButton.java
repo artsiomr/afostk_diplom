@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Maksim Turchyn
  */
-public abstract class FigureButton extends JButton implements MouseListener, FigureButtonPressEvent.FigureButtonPressListener {
+public abstract class FigureButton extends JToggleButton implements MouseListener, FigureButtonPressEvent.FigureButtonPressListener {
 
     private boolean pressed;
     private List<DrawEvent.DrawEventListener> drawEventListeners = new ArrayList<DrawEvent.DrawEventListener>();
@@ -95,6 +95,7 @@ public abstract class FigureButton extends JButton implements MouseListener, Fig
     public void onFigureButtonPressEvent(FigureButtonPressEvent e) {
         if (e.getSource() != this) {
             pressed = false;
+            setSelected(false);
         }
     }
 }
