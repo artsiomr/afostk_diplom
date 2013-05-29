@@ -21,7 +21,7 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
 
     public static final int GRID_STEP = 6;
     public static final int SCALE_INDENT = 40;
-    public InvisibleRectangle title = new InvisibleRectangle(100, 50, 800, 70, "Название по умолчанию");
+    public InvisibleRectangle title = new InvisibleRectangle(100, 50, 800, 20, "Название по умолчанию");
     private ShapeManager shapeManager = new ShapeManager();
 
     private List<rusyk.figures.Shape> shapes = new ArrayList<rusyk.figures.Shape>();

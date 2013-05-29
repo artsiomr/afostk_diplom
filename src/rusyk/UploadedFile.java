@@ -2,6 +2,8 @@ package rusyk;
 
 import javax.print.DocFlavor;
 import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 
 /**
  * Created with IntelliJ IDEA.
@@ -51,6 +53,11 @@ public class UploadedFile implements Serializable {
             }
         }
         return ous.toByteArray();
+    }
+
+    public String getStringFileContent() {
+        Charset encoding = Charset.defaultCharset();
+        return encoding.decode(ByteBuffer.wrap(content)).toString();
     }
 
     public String getFileName() {

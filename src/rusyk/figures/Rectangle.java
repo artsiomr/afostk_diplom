@@ -47,10 +47,18 @@ public class Rectangle extends FileShape {
         graphics2D.setFont(new Font( "Times New Roman", Font.BOLD, 12 ));
 
         graphics2D.drawString(getNumber(), this.x+width-10, this.y-5);
-        graphics2D.drawString(getName(), this.x+5, this.y+15);
+
+        drawString(graphics2D, getName(), this.x+5, this.y+15);
+
+        //graphics2D.drawString(getName(), this.x+5, this.y+15);
 
         graphics2D.setStroke(oldStroke);
 
+    }
+
+    private void drawString(Graphics g, String text, int x, int y) {
+        for (String line : text.split("\n"))
+            g.drawString(line, x, y += g.getFontMetrics().getHeight());
     }
 
     @Override

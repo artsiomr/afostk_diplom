@@ -2,10 +2,6 @@ package rusyk.figures;
 
 import rusyk.UploadedFile;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created with IntelliJ IDEA.
  * User: user
@@ -15,17 +11,30 @@ import java.util.List;
  */
 public abstract class FileShape extends NumberShape {
 
-    private UploadedFile file = new UploadedFile();
+    private UploadedFile fileChart = new UploadedFile();
+    private UploadedFile fileInfo = new UploadedFile();
 
-    public UploadedFile getFile() {
-        return file;
+    public UploadedFile getFileChart() {
+        return fileChart;
     }
 
-    public String getFileName() {
-        return file.getFileName();
+    public String getFileChartName() {
+        return fileChart.getFileName();
     }
 
-    public void addFile(UploadedFile newFile) {
-        file = newFile;
+    public void addFileChart(UploadedFile newFile) {
+        fileChart = newFile;
+    }
+
+    public UploadedFile getFileInfo() {
+        return fileInfo;
+    }
+
+    public String getFileInfoName() {
+        return fileInfo.getFileName();
+    }
+
+    public void addFileInfo(UploadedFile newFile) {
+        fileInfo = newFile;
     }
 }

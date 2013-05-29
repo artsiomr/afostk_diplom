@@ -2,8 +2,8 @@ package rusyk;
 
 import rusyk.bus.СобытийнаяШина;
 import rusyk.bus.ШинныйПодписчик;
+import rusyk.charts.SimpleChart;
 import rusyk.figures.InvisibleRectangle;
-import rusyk.figures.Line;
 import rusyk.figures.Rectangle;
 import rusyk.figures.Shape;
 
@@ -21,6 +21,9 @@ import java.awt.event.MouseEvent;
 public class ActionPanel extends JPanel implements ШинныйПодписчик {
 
     private MainFrame mainFrame;
+    // размер кнопок
+    int buttonDimensionX = 130;
+    int buttonDimensionY = 20;
 
     // поле "Номер блока"
     JLabel numberLabel;
@@ -31,13 +34,17 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
     JTextField nameField;
 
     // названия прикрепленных файлов
-    JLabel filenameLabel;
+    JLabel fileChartNameLabel;
+    JLabel fileInfoNameLabel;
 
     // поле для загрузки файла в фигуру
-    JButton addFile;
+    JButton addСhartFile;
+    JButton addInfoFile;
 
     JButton saveBtn;
     JButton deleteBtn;
+    JButton chartBtn;
+    JButton infoBtn;
     Rectangle rectangle;
     Shape shape;
 
@@ -46,6 +53,7 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
         this.mainFrame = mainFrame;
 
         СобытийнаяШина.подписатьсяНаСобытие("shape selection", this);
+        СобытийнаяШина.подписатьсяНаСобытие("построить.график", this);
 
         JLabel fieldLabel = new JLabel("Доступные действия:");
         add(fieldLabel);
@@ -69,13 +77,13 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
         add(nameField);
 
 
-        filenameLabel = new JLabel();
-        filenameLabel.setVisible(false);
-        add(filenameLabel);
+        fileChartNameLabel = new JLabel();
+        fileChartNameLabel.setVisible(false);
+        add(fileChartNameLabel);
 
-        // поле для загрузки файла в фигуру
+        // поле для загрузки файла отсчетов в фигуру
 
-        addFile = new JButton("Добавить файл") {
+        addСhartFile = new JButton("Доб. файл отсчетов") {
             @Override
             protected void processMouseEvent(MouseEvent mouseEvent) {
                 super.processMouseEvent(mouseEvent);
@@ -87,15 +95,49 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
                         if (rVal == JFileChooser.APPROVE_OPTION) {
                             //
                             UploadedFile file = new UploadedFile(fileChooser.getSelectedFile());
-                            rectangle.addFile(file);
-                            filenameLabel.setText(rectangle.getFileName());
+                            rectangle.addFileChart(file);
+                            fileChartNameLabel.setText(rectangle.getFileChartName());
+                            if (file.getContent() != null) {
+                                chartBtn.setVisible(true);
+                            }
                         }
                     }
                 }
             }
         };
-        addFile.setVisible(false);
-        add(addFile);
+        addСhartFile.setPreferredSize(new Dimension(buttonDimensionX, buttonDimensionY));
+        addСhartFile.setVisible(false);
+        add(addСhartFile);
+
+        fileInfoNameLabel = new JLabel();
+        fileInfoNameLabel.setVisible(false);
+        add(fileInfoNameLabel);
+
+        addInfoFile = new JButton("Добавить инфо") {
+            @Override
+            protected void processMouseEvent(MouseEvent mouseEvent) {
+                super.processMouseEvent(mouseEvent);
+                if (MouseEvent.MOUSE_CLICKED == mouseEvent.getID()) {
+                    if (rectangle != null) {
+                        JFileChooser fileChooser = new JFileChooser();
+                        // Demonstrate "Open" dialog:
+                        int rVal = fileChooser.showOpenDialog(mainFrame);
+                        if (rVal == JFileChooser.APPROVE_OPTION) {
+                            //
+                            UploadedFile file = new UploadedFile(fileChooser.getSelectedFile());
+                            rectangle.addFileInfo(file);
+                            fileInfoNameLabel.setText(rectangle.getFileInfoName());
+                            if (file.getContent() != null) {
+                                infoBtn.setVisible(true);
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        addInfoFile.setPreferredSize(new Dimension(buttonDimensionX, buttonDimensionY));
+        addInfoFile.setVisible(false);
+        add(addInfoFile);
 
         saveBtn = new JButton("Сохранить") {
             @Override
@@ -112,10 +154,11 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
                 }
             }
         };
+        saveBtn.setPreferredSize(new Dimension(buttonDimensionX, buttonDimensionY));
         saveBtn.setVisible(false);
         add(saveBtn);
 
-        deleteBtn = new JButton("Удалить") {
+        deleteBtn = new JButton("Удалить элемент") {
             @Override
             protected void processMouseEvent(MouseEvent mouseEvent) {
                 super.processMouseEvent(mouseEvent);
@@ -129,38 +172,113 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
                 }
             }
         };
+        deleteBtn.setPreferredSize(new Dimension(buttonDimensionX, buttonDimensionY));
         deleteBtn.setVisible(false);
         add(deleteBtn);
+
+        chartBtn = new JButton("Посроить график") {
+            @Override
+            protected void processMouseEvent(MouseEvent mouseEvent) {
+                super.processMouseEvent(mouseEvent);
+                if (MouseEvent.MOUSE_CLICKED == mouseEvent.getID()) {
+                    if (rectangle != null) {
+                        СобытийнаяШина.опубликоватьСобытие("построить.график", rectangle);
+                    } else if (shape != null) {
+                        СобытийнаяШина.опубликоватьСобытие("построить.график", shape);
+                    }
+
+                }
+            }
+        };
+        chartBtn.setPreferredSize(new Dimension(buttonDimensionX, buttonDimensionY));
+        chartBtn.setVisible(false);
+        add(chartBtn);
+
+        infoBtn = new JButton("Открыть инфо") {
+            @Override
+            protected void processMouseEvent(MouseEvent mouseEvent) {
+                super.processMouseEvent(mouseEvent);
+                if (MouseEvent.MOUSE_CLICKED == mouseEvent.getID()) {
+                    if (rectangle != null) {
+                        //СобытийнаяШина.опубликоватьСобытие("построить.график", rectangle);
+                    } else if (shape != null) {
+                        //СобытийнаяШина.опубликоватьСобытие("построить.график", shape);
+                    }
+
+                }
+            }
+        };
+        infoBtn.setPreferredSize(new Dimension(buttonDimensionX, buttonDimensionY));
+        infoBtn.setVisible(false);
+        add(infoBtn);
     }
 
     @Override
     public void оповестить(String eventName, Object... аргументы) {
+
         Shape shape = (Shape) аргументы[0];
         if (shape instanceof InvisibleRectangle) {
             this.rectangle = (InvisibleRectangle)shape;
+            UploadedFile fileInfo = rectangle.getFileInfo();
             numberLabel.setVisible(false);
             numberField.setVisible(false);
             nameLabel.setVisible(true);
             nameField.setVisible(true);
-            filenameLabel.setVisible(false);
+            fileChartNameLabel.setVisible(false);
+            fileInfoNameLabel.setVisible(true);
             saveBtn.setVisible(true);
-            addFile.setVisible(false);
+            addСhartFile.setVisible(false);
+            addInfoFile.setVisible(true);
             deleteBtn.setVisible(false);
+            chartBtn.setVisible(false);
+            if (fileInfo.getContent() != null) {
+                infoBtn.setVisible(true);
+            } else {
+                infoBtn.setVisible(false);
+            }
             nameField.setText(rectangle.getName());
+            fileInfoNameLabel.setText(rectangle.getFileInfoName());
         } else if (shape instanceof Rectangle) {
             this.rectangle = (Rectangle) shape;
+            UploadedFile fileChart = rectangle.getFileChart();
+            UploadedFile fileInfo = rectangle.getFileInfo();
             this.shape = null;
             numberLabel.setVisible(true);
             numberField.setVisible(true);
             nameLabel.setVisible(true);
             nameField.setVisible(true);
-            filenameLabel.setVisible(true);
+            fileChartNameLabel.setVisible(true);
+            fileInfoNameLabel.setVisible(true);
             saveBtn.setVisible(true);
-            addFile.setVisible(true);
+            addСhartFile.setVisible(true);
+            addInfoFile.setVisible(true);
             deleteBtn.setVisible(true);
+
+            if (fileChart.getContent() != null) {
+                chartBtn.setVisible(true);
+            } else {
+                chartBtn.setVisible(false);
+            }
+            if (fileInfo.getContent() != null) {
+                infoBtn.setVisible(true);
+            } else {
+                infoBtn.setVisible(false);
+            }
+
             numberField.setText(rectangle.getNumber());
             nameField.setText(rectangle.getName());
-            filenameLabel.setText(rectangle.getFileName());
+            fileChartNameLabel.setText(rectangle.getFileChartName());
+            fileInfoNameLabel.setText(rectangle.getFileInfoName());
+
+
+            if (eventName.equals("построить.график")) {
+                String blockName = rectangle.getName();
+                if (fileChart.getContent() != null) {
+                    SimpleChart chart = new SimpleChart(blockName, fileChart);
+                }
+            }
+
+
         } else {
             this.rectangle = null;
             this.shape = shape;
@@ -168,10 +286,14 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
             numberField.setVisible(false);
             nameLabel.setVisible(false);
             nameField.setVisible(false);
-            filenameLabel.setVisible(false);
+            fileChartNameLabel.setVisible(false);
+            fileInfoNameLabel.setVisible(false);
             saveBtn.setVisible(false);
-            addFile.setVisible(false);
+            addСhartFile.setVisible(false);
+            addInfoFile.setVisible(false);
             deleteBtn.setVisible(true);
+            chartBtn.setVisible(false);
+            infoBtn.setVisible(false);
         }
     }
 }
