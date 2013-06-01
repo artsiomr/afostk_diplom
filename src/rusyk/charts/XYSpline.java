@@ -1,7 +1,7 @@
 package rusyk.charts;
 
 import java.awt.*;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import org.jfree.chart.*;
 import org.jfree.chart.axis.NumberAxis;
@@ -11,13 +11,12 @@ import org.jfree.data.xy.*;
 import org.jfree.ui.*;
 import rusyk.UploadedFile;
 
-public class XYSpline extends ApplicationFrame {
+public class XYSpline extends JFrame {
 
     public XYSpline(String title, UploadedFile file) {
         super(title);
         JPanel jpanel = createDemoPanel(title, file);
         jpanel.setPreferredSize(new Dimension(500, 270));
-        //setDefaultCloseOperation(jpanel.EXIT_ON_CLOSE);
         getContentPane().add(jpanel);
 
     }
@@ -39,7 +38,7 @@ public class XYSpline extends ApplicationFrame {
 
         int i = 0;
         for (String line : lines) {
-            xyseries.add(i, Integer.parseInt(line));
+            xyseries.add(i, Double.valueOf(line.trim()));
             i++;
         }
 
