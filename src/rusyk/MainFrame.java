@@ -34,21 +34,27 @@ public class MainFrame extends JFrame implements DrawEvent.DrawEventListener {
 
 
         JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Файл");
+        JMenu menuFile = new JMenu("Файл");
+        JMenu menuInfo = new JMenu("Инфо");
 
         JMenuItem OpenMenuItem = new JMenuItem("Открыть");
         OpenMenuItem.addActionListener(new LoadDialog(this));
-        menu.add(OpenMenuItem);
+        menuFile.add(OpenMenuItem);
 
         JMenuItem SaveMenuItem = new JMenuItem("Сохранить как");
         SaveMenuItem.addActionListener(new SaveAsDialog(this));
-        menu.add(SaveMenuItem);
+        menuFile.add(SaveMenuItem);
 
-        menuBar.add(menu);
+        JMenuItem menuAbout = new JMenuItem("Разработчики");
+        menuAbout.addActionListener(new About());
+        menuInfo.add(menuAbout);
+
+        menuBar.add(menuFile);
+        menuBar.add(menuInfo);
         add(menuBar);
         setJMenuBar(menuBar);
 
-        btnPanel.setPreferredSize(new Dimension(150, 680));
+        btnPanel.setPreferredSize(new Dimension(100, 680));
         btnPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btnPanel.addDrawEventListener(this);
         add(btnPanel);
@@ -60,7 +66,7 @@ public class MainFrame extends JFrame implements DrawEvent.DrawEventListener {
         drawPanel.addMouseListener(btnPanel);
         add(drawPanel);
 
-        actPanel.setPreferredSize(new Dimension(150, 680));
+        actPanel.setPreferredSize(new Dimension(170, 680));
         actPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         add(actPanel);
 
