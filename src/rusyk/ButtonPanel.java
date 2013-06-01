@@ -26,7 +26,7 @@ public class ButtonPanel extends JPanel implements MouseListener, FigureButtonPr
 
         JLabel fieldLabel = new JLabel("Создать объект");
 
-        int buttonDimensionX = 100;
+        int buttonDimensionX = 95;
         int buttonDimensionY = 20;
 
         FigureButton rect41Btn = new RectangleButton("Блок 4x1", 4*x, x);

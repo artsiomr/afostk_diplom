@@ -10,6 +10,9 @@ import rusyk.figures.Shape;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,7 +25,7 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
 
     private MainFrame mainFrame;
     // размер кнопок
-    int buttonDimensionX = 130;
+    int buttonDimensionX = 160;
     int buttonDimensionY = 20;
 
     // поле "Номер блока"
@@ -70,7 +73,7 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
         // поле "Название блока"
         nameLabel = new JLabel("Название блока: ");
         nameField = new JTextField();
-        nameField.setColumns(10);
+        nameField.setColumns(14);
         nameLabel.setVisible(false);
         nameField.setVisible(false);
         add(nameLabel);
@@ -199,7 +202,22 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
             protected void processMouseEvent(MouseEvent mouseEvent) {
                 super.processMouseEvent(mouseEvent);
                 if (MouseEvent.MOUSE_CLICKED == mouseEvent.getID()) {
-                    if (rectangle != null) {
+                    if (rectangle.getFileInfoName() != null) {
+                        try {
+                            String property = "java.io.tmpdir";
+                            String tempDir = System.getProperty(property);
+                            tempDir += new String("afostk\\");
+                            String path = tempDir;
+                            String fileName = rectangle.getFileInfoName();
+                            File f = new File(path + fileName);
+                            f.createNewFile();
+                            FileOutputStream outputStream = new FileOutputStream(f);
+                            outputStream.write(rectangle.getFileInfo().getContent());
+                            Desktop.getDesktop().open(f);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         //СобытийнаяШина.опубликоватьСобытие("построить.график", rectangle);
                     } else if (shape != null) {
                         //СобытийнаяШина.опубликоватьСобытие("построить.график", shape);
