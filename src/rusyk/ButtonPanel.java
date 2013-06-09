@@ -56,12 +56,7 @@ public class ButtonPanel extends JPanel implements MouseListener, FigureButtonPr
         FigureButton lineBtn = new LineButton("Линия", false);
         lineBtn.setPreferredSize(new Dimension(buttonDimensionX, buttonDimensionY));
         figureButtons.add(lineBtn);
-        
-        
-        //FigureButton controlPointBtn = new ControlPointButton("Точка");
-        //controlPointBtn.setPreferredSize(new Dimension(buttonDimensionX, buttonDimensionY));
-        //figureButtons.add(controlPointBtn);
-        
+
         add(fieldLabel);
         add(rect11Btn);
         add(rect21Btn);
