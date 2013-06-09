@@ -1,5 +1,7 @@
 package rusyk.figures;
 
+import rusyk.UploadedFile;
+
 import java.awt.*;
 
 /**
@@ -108,6 +110,16 @@ public class Line extends Shape {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public UploadedFile getChartFile() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String getBlockNumber() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public int getX1() {

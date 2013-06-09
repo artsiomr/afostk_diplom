@@ -5,6 +5,7 @@ import javax.swing.*;
 
 import org.jfree.chart.*;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.jfree.data.xy.*;
@@ -30,7 +31,7 @@ public class XYSpline extends JFrame {
 
         XYSplineRenderer xysplinerenderer = new XYSplineRenderer();
 
-        XYSeries xyseries = new XYSeries(title);
+        XYSeries xyseries = new XYSeries(title);;
 
         //parse file here
         String otschety = file.getStringFileContent();
@@ -49,7 +50,8 @@ public class XYSpline extends JFrame {
         xyplot.setDomainGridlinePaint(Color.white);
         xyplot.setRangeGridlinePaint(Color.white);
         xyplot.setAxisOffset(new RectangleInsets(2D, 2D, 2D, 2D));
-        JFreeChart jfreechart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT, xyplot, true);
+        //JFreeChart jfreechart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT, xyplot, true);
+        JFreeChart jfreechart = ChartFactory.createXYLineChart(title, "X", "Y", xyseriescollection, PlotOrientation.VERTICAL, true, true, false);
         ChartUtilities.applyCurrentTheme(jfreechart);
         ChartPanel chartpanel = new ChartPanel(jfreechart);
         return chartpanel;

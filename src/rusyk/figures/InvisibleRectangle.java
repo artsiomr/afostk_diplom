@@ -11,6 +11,16 @@ import java.awt.*;
  */
 public class InvisibleRectangle extends Rectangle {
 
+    public String mathcadFileName = new String();
+
+    public String getMathcadFileName() {
+        return mathcadFileName;
+    }
+
+    public void setMathcadFileName(String mathcadFileName) {
+        this.mathcadFileName = mathcadFileName;
+    }
+
     public InvisibleRectangle(int x, int y, int width, int height, String title) {
         super(x, y, width, height);
         setName(title);

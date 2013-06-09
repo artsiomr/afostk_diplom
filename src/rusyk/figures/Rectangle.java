@@ -1,5 +1,7 @@
 package rusyk.figures;
 
+import rusyk.UploadedFile;
+
 import java.awt.*;
 
 /**
@@ -42,15 +44,21 @@ public class Rectangle extends FileShape {
             graphics2D.setStroke(new BasicStroke(thickness));
         }
 
+        if(color){
+            graphics2D.setPaint(Color.red);
+        } else {
+            graphics2D.setPaint(Color.black);
+        }
+
         graphics2D.drawRect(x, y, width, height);
+
+        graphics2D.setPaint(Color.black);
         
         graphics2D.setFont(new Font( "Times New Roman", Font.BOLD, 12 ));
 
         graphics2D.drawString(getNumber(), this.x+width-10, this.y-5);
 
         drawString(graphics2D, getName(), this.x+5, this.y+15);
-
-        //graphics2D.drawString(getName(), this.x+5, this.y+15);
 
         graphics2D.setStroke(oldStroke);
 
@@ -69,6 +77,16 @@ public class Rectangle extends FileShape {
         int y2 = this.y + height;
 
         return(x > x1 && y > y1 && x < x2 && y < y2);
+    }
+
+    @Override
+    public UploadedFile getChartFile() {
+        return getFileChart();
+    }
+
+    @Override
+    public String getBlockNumber() {
+        return getNumber();  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public int getX() {

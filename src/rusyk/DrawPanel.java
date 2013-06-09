@@ -2,6 +2,8 @@ package rusyk;
 
 import rusyk.bus.СобытийнаяШина;
 import rusyk.bus.ШинныйПодписчик;
+import rusyk.charts.ComplexChart;
+import rusyk.figures.FileShape;
 import rusyk.figures.InvisibleRectangle;
 import rusyk.figures.Shape;
 import rusyk.io.ShapeManager;
@@ -32,6 +34,8 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
         СобытийнаяШина.подписатьсяНаСобытие("сохранить.в.файл.фигуры", this);
         СобытийнаяШина.подписатьсяНаСобытие("загрузить.из.файла.фигуры", this);
         СобытийнаяШина.подписатьсяНаСобытие("about", this);
+        СобытийнаяШина.подписатьсяНаСобытие("построить.параметрическую.зависимость", this);
+        //СобытийнаяШина.подписатьсяНаСобытие("отобразить.параметрически", this);
         shapes.add(title);
     }
 
@@ -61,7 +65,7 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
                         СобытийнаяШина.опубликоватьСобытие("shape selection", shape);
                     }
                 } else {
-                    shape.unselect();
+                    shape.unSelect();
                 }
             }
         }
@@ -153,8 +157,56 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
             shapes.clear();
             shapes.addAll(shapeList);
             repaint();
-        } else if (имяСобытия.equals(("сохранить.в.файл.фигуры")))  {
+        } else if (имяСобытия.equals("сохранить.в.файл.фигуры"))  {
             shapeManager.save(shapes, (File)аргументы[0]);
-        }
+        } else if (имяСобытия.equals("построить.параметрическую.зависимость"))  {
+
+            Shape firstBlock = (Shape)аргументы[0];
+            String secondBlockNumber = (String)аргументы[1];
+
+            for (Shape shape : shapes) {
+
+                if(shape.getBlockNumber().equals(secondBlockNumber)) {
+                    //shape.getChartFile();
+                    //System.out.println("Second block is " + shape.getBlockNumber());
+                    //System.out.print(firstBlock.getChartFile().getStringFileContent());
+                    //System.out.println("============================================");
+                    //System.out.print(shape.getChartFile().getStringFileContent());
+
+                    String otschetyY = firstBlock.getChartFile().getStringFileContent();
+                    String otschetyX = shape.getChartFile().getStringFileContent();
+
+                    String linesY[] = otschetyY.split("\\r?\\n");
+                    String linesX[] = otschetyX.split("\\r?\\n");
+
+                    String[][] values = new String[][]{
+                        linesX,linesY
+                    };
+
+                    /*int i = 0;
+                    while (i <= values.length-1) {
+                        xyseries.add(Double.valueOf(linesX[i].trim()), Double.valueOf(linesY[i].trim()));
+                        //System.out.println(Double.valueOf(linesX[i].trim()) +" -  "+  Double.valueOf(linesY[i].trim()));
+                        i++;
+                    }*/
+
+                    String chartTitle = new String("Параметрическое представление ");
+
+                    ComplexChart chart = new ComplexChart(chartTitle, values);
+                }
+            }
+
+        } /*else if (имяСобытия.equals(("отобразить.параметрически")))  {
+
+            for (Shape shape : shapes) {
+
+                if(shape.hasChartFile() && shape.isSelected() != true) {
+                    shape.setColor();
+                } else {
+                    shape.unsetColor();
+                }
+            }
+            repaint();
+        }  */
     }
 }
