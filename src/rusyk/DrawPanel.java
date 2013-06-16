@@ -11,7 +11,9 @@ import rusyk.io.ShapeManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.io.File;
+import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +37,6 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
         СобытийнаяШина.подписатьсяНаСобытие("загрузить.из.файла.фигуры", this);
         СобытийнаяШина.подписатьсяНаСобытие("about", this);
         СобытийнаяШина.подписатьсяНаСобытие("построить.параметрическую.зависимость", this);
-        //СобытийнаяШина.подписатьсяНаСобытие("отобразить.параметрически", this);
         shapes.add(title);
     }
 
@@ -167,28 +168,42 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
             for (Shape shape : shapes) {
 
                 if(shape.getBlockNumber().equals(secondBlockNumber)) {
-                    //shape.getChartFile();
-                    //System.out.println("Second block is " + shape.getBlockNumber());
-                    //System.out.print(firstBlock.getChartFile().getStringFileContent());
-                    //System.out.println("============================================");
-                    //System.out.print(shape.getChartFile().getStringFileContent());
 
-                    String otschetyY = firstBlock.getChartFile().getStringFileContent();
-                    String otschetyX = shape.getChartFile().getStringFileContent();
+                    String otschetyX;
+                    String otschetyY;
+                    String linesY[];
+                    String linesX[];
 
-                    String linesY[] = otschetyY.split("\\r?\\n");
-                    String linesX[] = otschetyX.split("\\r?\\n");
+                    File currentDirectory = new File("");
+                    System.out.println(currentDirectory.getAbsolutePath());
+                    String currentDirectoryPath = String.valueOf(currentDirectory.getAbsoluteFile());
+
+                    String firstFullFilePath = currentDirectoryPath + "\\" + firstBlock.getBlockNumber() + ".dat";
+                    System.out.println(firstFullFilePath);
+                    File firstFile = new File(firstFullFilePath);
+                    if (firstFile.exists()) {
+                        Charset encoding = Charset.defaultCharset();
+                        otschetyX = encoding.decode(ByteBuffer.wrap(read(firstFile))).toString();
+                    } else {
+                        otschetyX = firstBlock.getChartFile().getStringFileContent();
+                    }
+
+                    String secondFullFilePath = currentDirectoryPath + "\\" + secondBlockNumber + ".dat";
+                    System.out.println(secondFullFilePath);
+                    File secondFile = new File(secondFullFilePath);
+                    if (firstFile.exists()) {
+                        Charset encoding = Charset.defaultCharset();
+                        otschetyY = encoding.decode(ByteBuffer.wrap(read(secondFile))).toString();
+                    } else {
+                        otschetyY = shape.getChartFile().getStringFileContent();
+                    }
+
+                    linesX = otschetyX.split("\\r?\\n");
+                    linesY = otschetyY.split("\\r?\\n");
 
                     String[][] values = new String[][]{
                         linesX,linesY
                     };
-
-                    /*int i = 0;
-                    while (i <= values.length-1) {
-                        xyseries.add(Double.valueOf(linesX[i].trim()), Double.valueOf(linesY[i].trim()));
-                        //System.out.println(Double.valueOf(linesX[i].trim()) +" -  "+  Double.valueOf(linesY[i].trim()));
-                        i++;
-                    }*/
 
                     String chartTitle = new String("Параметрическое представление ");
 
@@ -196,17 +211,36 @@ public class DrawPanel extends JPanel implements ШинныйПодписчик 
                 }
             }
 
-        } /*else if (имяСобытия.equals(("отобразить.параметрически")))  {
+        }
+    }
 
-            for (Shape shape : shapes) {
-
-                if(shape.hasChartFile() && shape.isSelected() != true) {
-                    shape.setColor();
-                } else {
-                    shape.unsetColor();
-                }
+    private byte[] read(File file) {
+        InputStream ios = null;
+        ByteArrayOutputStream ous = null;
+        try {
+            byte[] buffer = new byte[10240];
+            ous = new ByteArrayOutputStream();
+            ios = new FileInputStream(file);
+            int read = 0;
+            while ((read = ios.read(buffer)) != -1) {
+                ous.write(buffer, 0, read);
             }
-            repaint();
-        }  */
+
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } finally {
+            try {
+                if (ous != null)
+                    ous.close();
+            } catch (IOException e) {
+            }
+
+            try {
+                if (ios != null)
+                    ios.close();
+            } catch (IOException e) {
+            }
+        }
+        return ous.toByteArray();
     }
 }

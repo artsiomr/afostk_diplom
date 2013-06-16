@@ -1,5 +1,17 @@
 package rusyk;
 
+/**
+ * Created with IntelliJ IDEA.
+ * User: user
+ * Date: 10.06.13
+ * Time: 9:33
+ * To change this template use File | Settings | File Templates.
+ */
+
+import rusyk.bus.ШинныйПодписчик;
+
+import javax.swing.*;
+
 import rusyk.bus.СобытийнаяШина;
 import rusyk.bus.ШинныйПодписчик;
 import rusyk.buttons.FigureButton;
@@ -20,7 +32,7 @@ import java.io.*;
  * Time: 9:37
  * To change this template use File | Settings | File Templates.
  */
-public class ActionPanel extends JPanel implements ШинныйПодписчик {
+public class UserActionPanel extends JPanel implements ШинныйПодписчик {
 
     private MainFrame mainFrame;
     // размер кнопок
@@ -72,7 +84,7 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
     Rectangle rectangle;
     Shape shape;
 
-    public ActionPanel() {
+    public UserActionPanel() {
 
         СобытийнаяШина.подписатьсяНаСобытие("shape selection", this);
         СобытийнаяШина.подписатьсяНаСобытие("построить.график", this);
@@ -80,7 +92,7 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
         СобытийнаяШина.подписатьсяНаСобытие("отобразить.параметрически", this);
         СобытийнаяШина.подписатьсяНаСобытие("отправить.на.осциллограф", this);
 
-        JLabel fieldLabel = new JLabel("Доступные действия");
+        JLabel fieldLabel = new JLabel("Доступные действия:");
         add(fieldLabel);
 
         // поле "Номер блока"
@@ -390,10 +402,9 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
 
     @Override
     public void оповестить(String eventName, Object... аргументы) {
-
         Shape shape = (Shape) аргументы[0];
         if (shape instanceof InvisibleRectangle) {
-            this.rectangle = (InvisibleRectangle) shape;
+            this.rectangle = (InvisibleRectangle)shape;
             UploadedFile fileInfo = rectangle.getFileInfo();
             numberLabel.setVisible(false);
             numberField.setVisible(false);
@@ -477,7 +488,6 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
 
             File currentDirectory = new File("");
             System.out.println(currentDirectory.getAbsolutePath());
-            String currentDirectoryPath = String.valueOf(currentDirectory.getAbsoluteFile());
 
             if (eventName.equals("построить.график")) {
                 String blockName = rectangle.getName();
@@ -492,7 +502,7 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
             } else if (eventName.equals("построить.график.mcd")) {
                 System.out.print("Зашло в построить.график.mcd");
 
-                String fullFilePath = currentDirectoryPath + "\\" + rectangle.getBlockNumber() + ".dat";
+                String fullFilePath = String.valueOf(currentDirectory.getAbsoluteFile()) + "\\" + rectangle.getBlockNumber() + ".dat";
                 File f = new File(fullFilePath);
                 UploadedFile file = new UploadedFile(f);
 
@@ -504,15 +514,15 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
                 System.out.print("Зашло в отправить.на.осциллограф");
 
                 try {
-                    String fullFilePath = currentDirectoryPath + "\\" + rectangle.getBlockNumber() + ".dat";
+                    String fullFilePath = String.valueOf(currentDirectory.getAbsoluteFile()) + "\\" + rectangle.getBlockNumber() + ".dat";
                     File fileFrom = new File(fullFilePath);
 
-                    if (fileFrom.exists()) {
-                        File fileTo = new File(currentDirectoryPath + "\\" + "G6_45.dat");
+                    if(fileFrom.exists()){
+                        File fileTo = new File(String.valueOf(currentDirectory.getAbsoluteFile()) + "\\" + "G6_45.dat");
 
                         fileTo.delete();
 
-                        if (fileTo.createNewFile()) {
+                        if(fileTo.createNewFile()) {
                             FileOutputStream outputStream = new FileOutputStream(fileTo);
                             outputStream.write(read(fileFrom));
                             outputStream.close();
@@ -526,11 +536,11 @@ public class ActionPanel extends JPanel implements ШинныйПодписчи�
 
             }
 
-            if ((rectangle != null) && (rectangle.getBlockNumber() != "") && (rectangle.getBlockNumber() != "0")) {
-                String fullFilePath = currentDirectoryPath + "\\" + rectangle.getBlockNumber() + ".dat";
+            if((rectangle != null) && (rectangle.getBlockNumber() != "") && (rectangle.getBlockNumber() != "0")) {
+                String fullFilePath = String.valueOf(currentDirectory.getAbsoluteFile()) + "\\" + rectangle.getBlockNumber() + ".dat";
                 System.out.println(fullFilePath);
                 File f = new File(fullFilePath);
-                if (f.exists()) {
+                if(f.exists()) {
                     chartNameMcd.setText(rectangle.getBlockNumber() + ".dat");
                     chartNameMcd.setVisible(true);
                     openChartMcd.setVisible(true);

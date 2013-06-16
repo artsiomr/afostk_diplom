@@ -199,7 +199,7 @@ public class DrawGraph extends JPanel {
         frame.setLocationByPlatform(true);
         frame.setVisible(true);*/
     }
-
+/*
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -207,4 +207,5 @@ public class DrawGraph extends JPanel {
             }
         });
     }
+*/
 }

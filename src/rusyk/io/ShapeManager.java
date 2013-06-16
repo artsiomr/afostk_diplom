@@ -27,7 +27,7 @@ public class ShapeManager {
         }
     }
 
-    public List<Shape> load(File inFile)  {
+    public List<Shape> load(File inFile) {
         try {
             InputStream inputStream = new FileInputStream(inFile);
             ObjectInputStream in = new ObjectInputStream(inputStream);
